@@ -6,19 +6,19 @@ use MaxImmo\ExternalParties\AccessToken;
 use MaxImmo\ExternalParties\Client;
 use MaxImmo\ExternalParties\Exception\UnauthorizedException;
 use MaxImmo\ExternalParties\MiepClient;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-class ApiClientTest extends PHPUnit_Framework_TestCase
+class MiepClientTest extends TestCase
 {
-    /** @var Client | \PHPUnit_Framework_MockObject_MockObject */
+    /** @var Client | MockObject */
     private $client;
-    /** @var AccessToken | PHPUnit_Framework_MockObject_MockObject */
+    /** @var AccessToken | MockObject */
     private $accessToken;
     /** @var MiepClient */
     private $miepClient;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = $this->createMock('MaxImmo\ExternalParties\Client');
         $this->accessToken = $this->createMock('MaxImmo\ExternalParties\AccessToken');
@@ -28,7 +28,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
     /**
      * GetBrokers
      */
-    public function test GetBrokers Calls Client GetBrokers Once On Immediate Success()
+    public function test_GetBrokers_Calls_Client_GetBrokers_Once_On_Immediate_Success()
     {
         $this->client->expects($this->once())->method('getBrokers');
         $this->client->expects($this->once())->method('getAccessToken')->willReturn($this->accessToken);
@@ -36,7 +36,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->miepClient->getBrokers();
     }
 
-    public function test GetBrokers Calls Client GetBrokers Should Return Client Result()
+    public function test_GetBrokers_Calls_Client_GetBrokers_Should_Return_Client_Result()
     {
         $this->client->expects($this->any())->method('getBrokers')->willReturn('something');
         $this->client->expects($this->any())->method('getAccessToken')->willReturn($this->accessToken);
@@ -45,7 +45,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('something', $result);
     }
 
-    public function test GetBrokers Calls Client GetBrokers Exactly Twice When First Call Throws UnauthorizedException()
+    public function test_GetBrokers_Calls_Client_GetBrokers_Exactly_Twice_When_First_Call_Throws_UnauthorizedException()
     {
         $this->expectException(UnauthorizedException::class);
         $this->client
@@ -63,7 +63,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
     /**
      * GetInformationForBroker
      */
-    public function test GetInformationForBroker Calls Client GetInformationForBroker Once On Immediate Success()
+    public function test_GetInformationForBroker_Calls_Client_GetInformationForBroker_Once_On_Immediate_Success()
     {
         $this->client->expects($this->once())->method('getInformationForBroker');
         $this->client->expects($this->once())->method('getAccessToken')->willReturn($this->accessToken);
@@ -71,7 +71,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->miepClient->getInformationForBroker('brokerId');
     }
 
-    public function test GetInformationForBroker Calls Client GetInformationForBroker Should Return Client Result()
+    public function test_GetInformationForBroker_Calls_Client_GetInformationForBroker_Should_Return_Client_Result()
     {
         $this->client->expects($this->any())->method('getInformationForBroker')->willReturn('something');
         $this->client->expects($this->any())->method('getAccessToken')->willReturn($this->accessToken);
@@ -80,7 +80,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('something', $result);
     }
 
-    public function test GetInformationForBroker Calls Client GetInformationForBroker Exactly Twice When First Call Throws UnauthorizedException()
+    public function test_GetInformationForBroker_Calls_Client_GetInformationForBroker_Exactly_Twice_When_First_Call_Throws_UnauthorizedException()
     {
         $this->expectException(UnauthorizedException::class);
         $this->client
@@ -98,7 +98,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
     /**
      * GetRealEstateListForBroker
      */
-    public function test GetRealEstateListForBroker Calls Client GetRealEstateListForBroker Once On Immediate Success()
+    public function test_GetRealEstateListForBroker_Calls_Client_GetRealEstateListForBroker_Once_On_Immediate_Success()
     {
         $this->client->expects($this->once())->method('getRealEstateListForBroker');
         $this->client->expects($this->once())->method('getAccessToken')->willReturn($this->accessToken);
@@ -106,7 +106,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->miepClient->getRealEstateListForBroker('brokerId');
     }
 
-    public function test GetRealEstateListForBroker Calls Client GetRealEstateListForBroker Should Return Client Result()
+    public function test_GetRealEstateListForBroker_Calls_Client_GetRealEstateListForBroker_Should_Return_Client_Result()
     {
         $this->client->expects($this->any())->method('getRealEstateListForBroker')->willReturn('something');
         $this->client->expects($this->any())->method('getAccessToken')->willReturn($this->accessToken);
@@ -115,7 +115,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('something', $result);
     }
 
-    public function test GetRealEstateListForBroker Calls Client GetRealEstateListForBroker Exactly Twice When First Call Throws UnauthorizedException()
+    public function test_GetRealEstateListForBroker_Calls_Client_GetRealEstateListForBroker_Exactly_Twice_When_First_Call_Throws_UnauthorizedException()
     {
         $this->expectException(UnauthorizedException::class);
         $this->client
@@ -133,7 +133,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
     /**
      * GetPropertyForBroker
      */
-    public function test GetPropertyForBroker Calls Client GetPropertyForBroker Once On Immediate Success()
+    public function test_GetPropertyForBroker_Calls_Client_GetPropertyForBroker_Once_On_Immediate_Success()
     {
         $this->client->expects($this->once())->method('getPropertyForBroker');
         $this->client->expects($this->once())->method('getAccessToken')->willReturn($this->accessToken);
@@ -141,7 +141,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->miepClient->getPropertyForBroker('brokerId', 'propertyId');
     }
 
-    public function test GetPropertyForBroker Calls Client GetPropertyForBroker Should Return Client Result()
+    public function test_GetPropertyForBroker_Calls_Client_GetPropertyForBroker_Should_Return_Client_Result()
     {
         $this->client->expects($this->any())->method('getPropertyForBroker')->willReturn('something');
         $this->client->expects($this->any())->method('getAccessToken')->willReturn($this->accessToken);
@@ -150,7 +150,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('something', $result);
     }
 
-    public function test GetPropertyForBroker Calls Client GetPropertyForBroker Exactly Twice When First Call Throws UnauthorizedException()
+    public function test_GetPropertyForBroker_Calls_Client_GetPropertyForBroker_Exactly_Twice_When_First_Call_Throws_UnauthorizedException()
     {
         $this->expectException(UnauthorizedException::class);
         $this->client
@@ -168,7 +168,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
     /**
      * GetProjectForBroker
      */
-    public function test GetProjectForBroker Calls Client GetProjectForBroker Once On Immediate Success()
+    public function test_GetProjectForBroker_Calls_Client_GetProjectForBroker_Once_On_Immediate_Success()
     {
         $this->client->expects($this->once())->method('getProjectForBroker');
         $this->client->expects($this->once())->method('getAccessToken')->willReturn($this->accessToken);
@@ -176,7 +176,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->miepClient->getProjectForBroker('brokerId', 'projectId');
     }
 
-    public function test GetProjectForBroker Calls Client GetProjectForBroker Should Return Client Result()
+    public function test_GetProjectForBroker_Calls_Client_GetProjectForBroker_Should_Return_Client_Result()
     {
         $this->client->expects($this->any())->method('getProjectForBroker')->willReturn('something');
         $this->client->expects($this->any())->method('getAccessToken')->willReturn($this->accessToken);
@@ -185,7 +185,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('something', $result);
     }
 
-    public function test GetProjectForBroker Calls Client GetProjectForBroker Exactly Twice When First Call Throws UnauthorizedException()
+    public function test_GetProjectForBroker_Calls_Client_GetProjectForBroker_Exactly_Twice_When_First_Call_Throws_UnauthorizedException()
     {
         $this->expectException(UnauthorizedException::class);
         $this->client

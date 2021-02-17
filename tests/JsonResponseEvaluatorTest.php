@@ -10,21 +10,21 @@ use MaxImmo\ExternalParties\Exception\UnauthorizedException;
 use MaxImmo\ExternalParties\Exception\UnexpectedResponseException;
 use MaxImmo\ExternalParties\Http\StatusCode;
 use MaxImmo\ExternalParties\JsonResponseEvaluator;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
-class JsonResponseEvaluatorTest extends PHPUnit_Framework_TestCase
+class JsonResponseEvaluatorTest extends TestCase
 {
     /** @var JsonResponseEvaluator */
     private $evaluator;
-    /** @var ResponseInterface | PHPUnit_Framework_MockObject_MockObject */
+    /** @var ResponseInterface | MockObject */
     private $response;
-    /** @var StreamInterface | PHPUnit_Framework_MockObject_MockObject */
+    /** @var StreamInterface | MockObject */
     private $body;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->evaluator = new JsonResponseEvaluator();
         $this->response = $this->createMock(ResponseInterface::class);
@@ -32,7 +32,7 @@ class JsonResponseEvaluatorTest extends PHPUnit_Framework_TestCase
         $this->response->expects($this->any())->method('getBody')->willReturn($this->body);
     }
 
-    public function test EvaluateResponse Should Return JsonDecoded Content()
+    public function test_EvaluateResponse_Should_Return_JsonDecoded_Content()
     {
         $this->response->expects($this->any())->method('getStatusCode')->willReturn(StatusCode::OK);
         $this->body->expects($this->any())->method('getContents')->willReturn('{"someKey": "someValue"}');
@@ -40,42 +40,42 @@ class JsonResponseEvaluatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['someKey' => 'someValue'], $result);
     }
 
-    public function test EvaluateResponse Should Throw BadRequestException On Bad Request()
+    public function test_EvaluateResponse_Should_Throw_BadRequestException_On_Bad_Request()
     {
         $this->expectException(BadRequestException::class);
         $this->response->expects($this->any())->method('getStatusCode')->willReturn(StatusCode::BAD_REQUEST);
         $this->evaluator->evaluateResponse($this->response);
     }
 
-    public function test EvaluateResponse Should Throw UnauthorizedException On Unauthorized()
+    public function test_EvaluateResponse_Should_Throw_UnauthorizedException_On_Unauthorized()
     {
         $this->expectException(UnauthorizedException::class);
         $this->response->expects($this->any())->method('getStatusCode')->willReturn(StatusCode::UNAUTHORIZED);
         $this->evaluator->evaluateResponse($this->response);
     }
 
-    public function test EvaluateResponse Should Throw NotFoundException On Not Found()
+    public function test_EvaluateResponse_Should_Throw_NotFoundException_On_Not_Found()
     {
         $this->expectException(NotFoundException::class);
         $this->response->expects($this->any())->method('getStatusCode')->willReturn(StatusCode::NOT_FOUND);
         $this->evaluator->evaluateResponse($this->response);
     }
 
-    public function test EvaluateResponse Should Throw TooManyRequestsException On Too Many Requests()
+    public function test_EvaluateResponse_Should_Throw_TooManyRequestsException_On_Too_Many_Requests()
     {
         $this->expectException(TooManyRequestsException::class);
         $this->response->expects($this->any())->method('getStatusCode')->willReturn(StatusCode::TOO_MANY_REQUESTS);
         $this->evaluator->evaluateResponse($this->response);
     }
 
-    public function test EvaluateResponse Should Throw TooManyRequestsException On Service Unavailable()
+    public function test_EvaluateResponse_Should_Throw_TooManyRequestsException_On_Service_Unavailable()
     {
         $this->expectException(ServiceUnavailableException::class);
         $this->response->expects($this->any())->method('getStatusCode')->willReturn(StatusCode::SERVICE_UNAVAILABLE);
         $this->evaluator->evaluateResponse($this->response);
     }
 
-    public function test EvaluateResponse Should Throw UnexpectedResponseException On Unknown StatusCode()
+    public function test_EvaluateResponse_Should_Throw_UnexpectedResponseException_On_Unknown_StatusCode()
     {
         $this->expectException(UnexpectedResponseException::class);
         $this->response->expects($this->any())->method('getStatusCode')->willReturn('unknown');

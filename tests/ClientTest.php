@@ -8,29 +8,29 @@ use MaxImmo\ExternalParties\AccessToken;
 use MaxImmo\ExternalParties\Client;
 use MaxImmo\ExternalParties\Exception\NoAccessTokenException;
 use MaxImmo\ExternalParties\ResponseEvaluator;
-use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class ClientTest extends PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
-    /** @var HttpClient | PHPUnit_Framework_MockObject_MockObject */
+    /** @var HttpClient | MockObject */
     private $httpClient;
-    /** @var MessageFactory | PHPUnit_Framework_MockObject_MockObject */
+    /** @var MessageFactory | MockObject */
     private $messageFactory;
-    /** @var ResponseEvaluator | PHPUnit_Framework_MockObject_MockObject */
+    /** @var ResponseEvaluator | MockObject */
     private $responseEvaluator;
-    /** @var AccessToken | PHPUnit_Framework_MockObject_MockObject */
+    /** @var AccessToken | MockObject */
     private $accessToken;
-    /** @var RequestInterface | PHPUnit_Framework_MockObject_MockObject */
+    /** @var RequestInterface | MockObject */
     private $request;
-    /** @var ResponseInterface | PHPUnit_Framework_MockObject_MockObject */
+    /** @var ResponseInterface | MockObject */
     private $response;
     /** @var Client */
     private $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->httpClient = $this->createMock(HttpClient::class);
         $this->messageFactory = $this->createMock(MessageFactory::class);
@@ -46,7 +46,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
             ->willReturn($this->response);
     }
 
-    public function test GetBrokers Should Perform Request Using Correct Parameters()
+    public function test_GetBrokers_Should_Perform_Request_Using_Correct_Parameters()
     {
         $this->messageFactory
             ->expects($this->once())
@@ -61,7 +61,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client->getBrokers($this->accessToken);
     }
 
-    public function test GetRealEstateListForBroker Should Perform Request Using Correct Parameters()
+    public function test_GetRealEstateListForBroker_Should_Perform_Request_Using_Correct_Parameters()
     {
         $this->messageFactory
             ->expects($this->once())
@@ -76,7 +76,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client->getRealEstateListForBroker('brokerId', $this->accessToken);
     }
 
-    public function test GetPropertyForBroker Should Perform Request Using Correct Parameters()
+    public function test_GetPropertyForBroker_Should_Perform_Request_Using_Correct_Parameters()
     {
         $this->messageFactory
             ->expects($this->once())
@@ -91,7 +91,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client->getPropertyForBroker('brokerId', 'propertyId', $this->accessToken);
     }
 
-    public function test GetProjectForBroker Should Perform Request Using Correct Parameters()
+    public function test_GetProjectForBroker_Should_Perform_Request_Using_Correct_Parameters()
     {
         $this->messageFactory
             ->expects($this->once())
@@ -106,7 +106,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client->getProjectForBroker('brokerId', 'projectId', $this->accessToken);
     }
 
-    public function test GetAccessToken Should Perform Request Using Correct Parameters()
+    public function test_GetAccessToken_Should_Perform_Request_Using_Correct_Parameters()
     {
         $this->expectException(NoAccessTokenException::class);
         $this->messageFactory
@@ -122,7 +122,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client->getAccessToken(null);
     }
 
-    public function test GetAccessToken Should Return AccessToken If Exists()
+    public function test_GetAccessToken_Should_Return_AccessToken_If_Exists()
     {
         $this->messageFactory
             ->expects($this->once())
