@@ -1,14 +1,17 @@
 {
-  "name": "zimmobe/miep-php-api-client",
+  "name": "epse/miep-php-api-client",
   "type": "library",
   "description": "Max-immo External Partners API Client",
-  "homepage": "https://github.com/zimmo-be/miep-php-api-client",
+  "homepage": "https://github.com/epse/miep-php-api-client",
   "keywords": ["miep", "partner", "ep", "api"],
   "license": "MIT",
   "authors": [
     {
       "name": "Zimmo.be Team",
       "homepage": "https://zimmo.be"
+    },
+    {
+      "name": "Stef Pletinck"
     }
   ],
   "require": {
